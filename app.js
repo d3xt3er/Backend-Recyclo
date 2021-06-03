@@ -4,7 +4,7 @@ const app = express()
 const port = 3000
 
 app.get('/', (req, res) => {
-  res.send('API do Recyclo')
+  res.send('API do Recyclo');
 })
 
 
@@ -25,20 +25,20 @@ const pool = new Pool({
 //   })
 
 // Rota usuarios
-app.get('/users', (req, res) => {
+// app.get('/users', (req, res) => {
 
-  pool.query(`select firstname , lastname from persons where personid >2;`, (err, res) => {
-    if (err) {
-        console.log("Error - Failed to select all from Users");
-        console.log(err);
-    }
-    else{
-        console.log(res.rows);
-        res.json(res);
-    }
-  });
+//   pool.query(`select firstname , lastname from persons where personid >2;`, (err, res) => {
+//     if (err) {
+//         console.log("Error - Failed to select all from Users");
+//         console.log(err);
+//     }
+//     else{
+//         console.log(res.rows);
+//         res.json(res);
+//     }
+//   });
 
-});
+// });;
 
 
 app.listen(port, () => {
