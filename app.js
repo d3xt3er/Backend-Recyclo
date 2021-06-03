@@ -1,11 +1,15 @@
-const express = require('express')
+// const express = require('express')
 const { Pool, Client } = require('pg')
-const app = express()
-const port = 3000
+// const app = express();
+// const port = 3000;
+// const cors = require('cors');
 
-app.get('/', (req, res) => {
-  res.send('API do Recyclo');
-})
+
+// app.use(cors());
+
+// app.get('/', (req, res) => {
+//   res.send('API do Recyclo');
+// })
 
 
 const pool = new Pool({
@@ -40,7 +44,26 @@ const pool = new Pool({
 
 // });;
 
+const express = require('express');
+const app = express();
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const router = express.Router();
 
-app.listen(port, () => {
-  console.log(`Servidor na porta http://localhost:${port}`)
-})
+//Rotas
+const index = require('./src/routes/index');
+// const onibusRoute = require('./src/routes/onibusRoute');
+// const pagamentoRoute = require('./src/routes/pagamentoRoute');
+// const seletivoRoute = require('./src/routes/seletivoRoute');
+
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
+
+app.use('/', index);
+
+app.use(cors());
+// app.use('/onibus', onibusRoute);
+// app.use('/seletivo', seletivoRoute);
+// app.use('/pagamento', pagamentoRoute);
+
+module.exports = app;
