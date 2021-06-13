@@ -16,6 +16,7 @@ app.use('/', index);
 
 app.use(cors());
 app.use('/usuario', usuarioRoute);
+app.use('/usuario/:id', usuarioRoute);
 
 
 module.exports = app;
