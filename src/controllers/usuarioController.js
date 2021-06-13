@@ -23,9 +23,16 @@ exports.getUserById = (req, res, next) => {
         throw error
       }
       else {
-        console.log(results.rows);
+         console.log(results.rows);
 
-          res.status(200).send(results.rows)
+        //  Mostra um array com o objeto JSON
+        //  res.status(200).send(results.rows)
+
+        //  Mostra o objeto JSON
+        //  res.status(200).send(results.rows[0])
+
+        //  Mostra o texto
+          res.status(200).send(results.rows[0].nm_usuario)
       }
     })
   }
