@@ -2,13 +2,17 @@ const banco = require('../postgres');
 
 exports.get = (req, res, next) => {
 
-    banco.query(`SELECT * FROM tb_usuario;`, (err, result) => {
-        if (err) {
-            console.log("Error - Failed to select all from Users");
-            console.log(err);
+    const { nome, senha } = req.body;
+
+
+    banco.query(`SELECT * FROM tb_usuario WHERE nm_usuario = '${nome}' AND cd_senha = '${senha}';`, (err, result) => {
+        if (result.rows <= 0) {
+            console.log(result.rows);
+            res.send('Usuario não encontrado!');
+
         } else {
             console.log(result.rows);
-            res.status(200).json(result.rows);
+            res.send('Usuario existente');
         }
     });
 }
