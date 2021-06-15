@@ -48,3 +48,39 @@ exports.post = (req, res) => {
         }
     })
 }
+
+
+exports.put = (req, res) => {
+    const { id, nome, senha } = req.body
+
+    banco.query(`UPDATE tb_usuario SET nm_usuario = '${nome}', cd_senha = '${senha}' WHERE cd_usuario = ${id}`, (error, result) => {
+        if (!id) {
+            return res.send('Usuario não encontrado!');
+        }
+        if (error) {
+            res.json(error);
+            console.log(error);
+        } else {
+            console.log(result);
+            res.send('Alterado!')
+        }
+    })
+}
+
+
+exports.delete = (req, res) => {
+    const { id } = req.body
+
+    banco.query(`DELETE FROM tb_usuario WHERE cd_usuario = '${id}'`, (error, result) => {
+        if (!id) {
+            return res.send('Usuario não encontrado')
+        }
+
+        if (error) {
+            res.json(error)
+            console.log(error);
+        } else {
+            res.send('Usuario deletado com sucesso!');
+        }
+    })
+}
