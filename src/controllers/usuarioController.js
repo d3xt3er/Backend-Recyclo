@@ -1,12 +1,12 @@
 const banco = require('../postgres');
 
-exports.get = (req, res, next) => {
+exports.get = (req, res) => {
 
     const { nome, senha } = req.body;
 
 
     banco.query(`SELECT * FROM tb_usuario WHERE nm_usuario = '${nome}' AND cd_senha = '${senha}';`, (err, result) => {
-        if (result.rows <= 0) {
+        if (result.rows.length <= 0) {
             console.log(result.rows);
             res.send('Usuario não encontrado!');
 
@@ -18,7 +18,7 @@ exports.get = (req, res, next) => {
 }
 
 
-exports.getUserById = (req, res, next) => {
+exports.getUserById = (req, res) => {
     const id = parseInt(req.params.id)
 
     banco.query('SELECT nm_usuario FROM tb_usuario WHERE cd_usuario = $1', [id], (error, results) => {
