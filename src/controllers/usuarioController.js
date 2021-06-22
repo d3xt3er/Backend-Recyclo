@@ -2,17 +2,16 @@ const banco = require('../postgres');
 
 exports.get = (req, res) => {
 
-    const { nome, senha } = req.body;
+    const { nome, senha } = req.params;
 
 
-    banco.query(`SELECT * FROM tb_usuario WHERE nm_usuario = '${nome}' AND cd_senha = '${senha}';`, (err, result) => {
-        if (result.rows.length <= 0) {
+    banco.query(`SELECT * FROM tb_usuario WHERE nm_usuario = $1 AND cd_senha = $2;`, [nome, senha], (err, result) => {
+        if (result.rows.length > 0) {
             console.log(result.rows);
-            res.send('Usuario não encontrado!');
+            return res.send('Usuario encontrado!');
 
         } else {
-            console.log(result.rows);
-            res.send('Usuario existente');
+            res.send('Usuario não existente');
         }
     });
 }
