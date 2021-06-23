@@ -47,7 +47,7 @@ exports.post = (req, res) => {
             res.json(error);
             console.log(error);
         } else {
-            res.status(201).send('Cadastrado com sucesso!');
+            res.send('Cadastrado com sucesso!');
         }
     })
 }
