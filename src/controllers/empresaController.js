@@ -33,7 +33,7 @@ exports.getCompanyById = (req, res) => {
             //  res.status(200).send(results.rows[0])
 
             //  Mostra o texto
-            res.status(200).send(results.rows[0].nm_usuario)
+            res.status(200).send(results.rows[0].nm_empresa)
         }
     })
 }
@@ -44,7 +44,7 @@ exports.post = (req, res) => {
 
     banco.query('INSERT INTO tb_empresa (cd_empresa, nm_empresa, cd_cnpj, cd_telefone, ds_email, cd_senha_empresa) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *', [id, nome, cnpj, telefone, email, senha], (error, results) => {
         if (error) {
-            res.json(error);
+            res.send('Desculpe, houve um erro!');
             console.log(error);
         } else {
             res.send('Cadastrado com sucesso!');
@@ -76,7 +76,7 @@ exports.delete = (req, res) => {
 
     banco.query(`DELETE FROM tb_empresa WHERE cd_empresa = '${id}'`, (error, result) => {
         if (!id) {
-            return res.send('Usuario não encontrado')
+            return res.send('Usuario não encontrado!')
         }
 
         if (error) {
