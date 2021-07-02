@@ -40,9 +40,9 @@ exports.getCompanyById = (req, res) => {
 
 exports.post = (req, res) => {
 
-    const { id, nome, cnpj, telefone, email, senha } = req.body
+    const { nome, cnpj, telefone, email, senha } = req.body
 
-    banco.query('INSERT INTO tb_empresa (cd_empresa, nm_empresa, cd_cnpj, cd_telefone, ds_email, cd_senha_empresa) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *', [id, nome, cnpj, telefone, email, senha], (error, results) => {
+    banco.query('INSERT INTO tb_empresa (cd_empresa, nm_empresa, cd_cnpj, cd_telefone, nm_email, cd_senha_empresa) VALUES ((select novoidempresa()), $1, $2, $3, $4, $5) RETURNING *', [nome, cnpj, telefone, email, senha], (error, results) => {
         if (error) {
             res.send('Desculpe, houve um erro!');
             console.log(error);
