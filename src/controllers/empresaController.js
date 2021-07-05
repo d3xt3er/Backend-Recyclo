@@ -5,7 +5,7 @@ exports.get = (req, res) => {
     const { nome, senha } = req.params;
 
 
-    banco.query(`SELECT * FROM tb_empresa WHERE nm_empresa = $1 AND cd_senha = $2;`, [nome, senha], (err, result) => {
+    banco.query(`SELECT * FROM tb_empresa WHERE nm_empresa = $1 AND cd_senha_empresa = $2;`, [nome, senha], (err, result) => {
         if (result.rows.length > 0) {
             console.log(result.rows);
             return res.send('Usuario encontrado!');
