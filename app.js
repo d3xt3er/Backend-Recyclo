@@ -4,8 +4,8 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const router = express.Router();
 
-const passport = require('passport');
-const session = require('express-session');
+// const passport = require('passport');
+// const session = require('express-session');
 
 //Rotas
 const index = require('./src/routes/index');

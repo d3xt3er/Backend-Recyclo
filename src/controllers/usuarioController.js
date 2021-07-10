@@ -7,11 +7,29 @@ exports.get = (req, res) => {
 
     banco.query(`SELECT * FROM tb_usuario WHERE nm_usuario = $1 AND cd_senha = $2;`, [nome, senha], (err, result) => {
         if (result.rows.length > 0) {
-            console.log(result.rows);
-            return res.send('Usuario encontrado!');
+            // console.log(result.rows);
+            res.send('Usuario encontrado!');
+            // return res.status(200).send(result.rows[0].nm_usuario + result.rows[0].cd_senha + result.rows[0].cd_cpf + result.rows[0].ds_email);
 
         } else {
             res.send('Usuario não existente');
+        }
+    });
+}
+
+exports.getUser = (req, res) => {
+
+    const { nome, senha } = req.params;
+
+
+    banco.query(`SELECT * FROM tb_usuario WHERE nm_usuario = $1 AND cd_senha = $2;`, [nome, senha], (err, result) => {
+        if (result.rows.length > 0) {
+            // console.log(result.rows);
+            return res.status(200).send(result.rows[0])
+                // return res.status(200).send(result.rows[0].nm_usuario + " " + result.rows[0].cd_senha + " " + result.rows[0].cd_cpf + " " + result.rows[0].ds_email);
+
+        } else {
+            res.send('Informações não encontradas!');
         }
     });
 }
@@ -20,20 +38,20 @@ exports.get = (req, res) => {
 exports.getUserById = (req, res) => {
     const id = parseInt(req.params.id)
 
-    banco.query('SELECT nm_usuario FROM tb_usuario WHERE cd_usuario = $1', [id], (error, results) => {
+    banco.query('SELECT * FROM tb_usuario WHERE cd_usuario = $1', [id], (error, results) => {
         if (error) {
             throw error
         } else {
             console.log(results.rows);
 
             //  Mostra um array com o objeto JSON
-            //  res.status(200).send(results.rows)
+            // res.status(200).send(results.rows)
 
             //  Mostra o objeto JSON
-            //  res.status(200).send(results.rows[0])
+            res.status(200).send(results.rows[0])
 
             //  Mostra o texto
-            res.status(200).send(results.rows[0].nm_usuario)
+            // res.send(results.rows[0].nm_usuario + results.rows[0].cd_senha + results.rows[0].cd_cpf + results.rows[0].ds_email)
         }
     })
 }
