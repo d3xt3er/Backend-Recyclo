@@ -6,7 +6,7 @@
 
 ## Integrantes
  - Paulo José `<d3xt3er>` : <https://github.com/d3xt3er> 
- - Caio Corrêia `<d3xt3er>` : <https://github.com/CaioCDJ>
+ - Caio Corrêia `<CaioCDJ>` : <https://github.com/CaioCDJ>
  <hr>
  
  ## Tecnologias || Linguagens 
