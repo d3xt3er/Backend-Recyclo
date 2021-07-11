@@ -3,6 +3,7 @@ const router = express.Router();
 const controller = require('../controllers/empresaController')
 
 router.get('/login/:nome/:senha', controller.get);
+router.get('/company/:nome/:senha', controller.getCompany);
 router.get('/:id', controller.getCompanyById);
 router.post('/criar', controller.post);
 router.put('/alterar', controller.put);

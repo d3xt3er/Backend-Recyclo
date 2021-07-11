@@ -16,6 +16,23 @@ exports.get = (req, res) => {
     });
 }
 
+exports.getCompany = (req, res) => {
+
+    const { nome, senha } = req.params;
+
+
+    banco.query(`SELECT * FROM tb_empresa WHERE nm_empresa = $1 AND cd_senha_empresa = $2;`, [nome, senha], (err, result) => {
+        if (result.rows.length > 0) {
+            // console.log(result.rows);
+            return res.status(200).send(result.rows[0])
+                // return res.status(200).send(result.rows[0].nm_usuario + " " + result.rows[0].cd_senha + " " + result.rows[0].cd_cpf + " " + result.rows[0].ds_email);
+
+        } else {
+            res.send('Informações não encontradas!');
+        }
+    });
+}
+
 
 exports.getCompanyById = (req, res) => {
     const id = parseInt(req.params.id)
