@@ -73,9 +73,9 @@ exports.post = (req, res) => {
 
 
 exports.put = (req, res) => {
-    const { id, nome, senha } = req.body
+    const { id, nome, senha, cpf, telefone } = req.body
 
-    banco.query(`UPDATE tb_usuario SET nm_usuario = '${nome}', cd_senha = '${senha}' WHERE cd_usuario = ${id}`, (error, result) => {
+    banco.query(`UPDATE tb_usuario SET nm_usuario = '${nome}', cd_senha = '${senha}', cd_cpf = '${cpf}', cd_telefone = '${telefone}' WHERE cd_usuario = ${id}`, (error, result) => {
         if (!id) {
             return res.send('Usuario não encontrado!');
         }
