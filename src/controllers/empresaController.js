@@ -55,6 +55,39 @@ exports.getCompanyById = (req, res) => {
     })
 }
 
+// Adicionar Ponto
+// exports.point = (req, res) => {
+
+//     const { nome_ponto, logradouro, telefone, cd_empresa } = req.body
+
+//     banco.query('INSERT INTO tb_ponto_coleta (cd_ponto_coleta, nm_ponto, nm_logradouro, cd_telefone) VALUES ($1, $2, $3, $4) RETURNING *', [nome_ponto, logradouro, telefone, cd_empresa], (error, result) => {
+//         if (error) {
+//             res.send('Ponto cadastrado!')
+//         } else {
+//             res.send('Desculpe, seu ponto não foi cadastrado');
+//         }
+//     })
+// }
+
+
+// Exibir Ponto
+// exports.getPoint = (req, res) => {
+
+//     const { nome, senha } = req.params;
+
+
+//     banco.query(`SELECT * FROM tb_ponto_coleta AS A JOIN tb_empresa AS B WHERE A.fk_cd_empresa = B.cd_empresa`, [nome, senha], (err, result) => {
+//         if (result.rows.length > 0) {
+//             // console.log(result.rows);
+//             return res.status(200).send(result.rows[0])
+//                 // return res.status(200).send(result.rows[0].nm_usuario + " " + result.rows[0].cd_senha + " " + result.rows[0].cd_cpf + " " + result.rows[0].ds_email);
+
+//         } else {
+//             res.send('Informações não encontradas!');
+//         }
+//     });
+// }
+
 exports.post = (req, res) => {
 
     const { nome, cnpj, telefone, email, senha } = req.body

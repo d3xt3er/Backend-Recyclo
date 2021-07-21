@@ -40,7 +40,7 @@ exports.getUserById = (req, res) => {
 
     banco.query('SELECT * FROM tb_usuario WHERE cd_usuario = $1', [id], (error, results) => {
         if (error) {
-            throw error
+            res.json(error);
         } else {
             console.log(results.rows);
 
@@ -70,6 +70,7 @@ exports.post = (req, res) => {
         }
     })
 }
+
 
 
 exports.put = (req, res) => {
