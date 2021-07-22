@@ -23,9 +23,7 @@ exports.getCompany = (req, res) => {
 
     banco.query(`SELECT * FROM tb_empresa WHERE nm_empresa = $1 AND cd_senha_empresa = $2;`, [nome, senha], (err, result) => {
         if (result.rows.length > 0) {
-            // console.log(result.rows);
             return res.status(200).send(result.rows[0])
-                // return res.status(200).send(result.rows[0].nm_usuario + " " + result.rows[0].cd_senha + " " + result.rows[0].cd_cpf + " " + result.rows[0].ds_email);
 
         } else {
             res.send('Informações não encontradas!');
@@ -58,7 +56,7 @@ exports.getCompanyById = (req, res) => {
 // Adicionar Ponto
 // exports.point = (req, res) => {
 
-//     const { nome_ponto, logradouro, telefone, cd_empresa } = req.body
+//     const { nome_ponto, logradouro, cd_empresa } = req.body
 
 //     banco.query('INSERT INTO tb_ponto_coleta (cd_ponto_coleta, nm_ponto, nm_logradouro, cd_telefone) VALUES ($1, $2, $3, $4) RETURNING *', [nome_ponto, logradouro, telefone, cd_empresa], (error, result) => {
 //         if (error) {

@@ -7,9 +7,7 @@ exports.get = (req, res) => {
 
     banco.query(`SELECT * FROM tb_usuario WHERE nm_usuario = $1 AND cd_senha = $2;`, [nome, senha], (err, result) => {
         if (result.rows.length > 0) {
-            // console.log(result.rows);
             res.send('Usuario encontrado!');
-            // return res.status(200).send(result.rows[0].nm_usuario + result.rows[0].cd_senha + result.rows[0].cd_cpf + result.rows[0].ds_email);
 
         } else {
             res.send('Usuario não existente');
@@ -24,9 +22,7 @@ exports.getUser = (req, res) => {
 
     banco.query(`SELECT * FROM tb_usuario WHERE nm_usuario = $1 AND cd_senha = $2;`, [nome, senha], (err, result) => {
         if (result.rows.length > 0) {
-            // console.log(result.rows);
             return res.status(200).send(result.rows[0])
-                // return res.status(200).send(result.rows[0].nm_usuario + " " + result.rows[0].cd_senha + " " + result.rows[0].cd_cpf + " " + result.rows[0].ds_email);
 
         } else {
             res.send('Informações não encontradas!');
