@@ -71,22 +71,19 @@ exports.getCompanyById = (req, res) => {
 
 
 // Exibir Ponto
-// exports.getPoint = (req, res) => {
+exports.getPoint = (req, res) => {
 
-//     const { nome, senha } = req.params;
+    const { nome, senha } = req.params;
 
 
-//     banco.query(`SELECT * FROM tb_ponto_coleta AS A JOIN tb_empresa AS B WHERE A.fk_cd_empresa = B.cd_empresa`, [nome, senha], (err, result) => {
-//         if (result.rows.length > 0) {
-//             // console.log(result.rows);
-//             return res.status(200).send(result.rows[0])
-//                 // return res.status(200).send(result.rows[0].nm_usuario + " " + result.rows[0].cd_senha + " " + result.rows[0].cd_cpf + " " + result.rows[0].ds_email);
-
-//         } else {
-//             res.send('Informações não encontradas!');
-//         }
-//     });
-// }
+    banco.query(`SELECT * FROM tb_ponto_coleta as A INNER JOIN tb_empresa as B on a.fk_cd_empresa = b.cd_empresa and b.nm_empresa = $1 and b.cd_senha_empresa = $2;`, [nome, senha], (err, result) => {
+        if (result.rows.length > 0) {
+            return res.status(200).send(result.rows)
+        } else {
+            res.send('Nenhum ponto cadastrado');
+        }
+    });
+}
 
 exports.post = (req, res) => {
 
