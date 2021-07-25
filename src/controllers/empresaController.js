@@ -1,5 +1,6 @@
 const banco = require('../postgres');
 
+// Login - Empresa
 exports.get = (req, res) => {
 
     const { nome, senha } = req.params;
@@ -16,6 +17,7 @@ exports.get = (req, res) => {
     });
 }
 
+// Exibir informações - Empresa
 exports.getCompany = (req, res) => {
 
     const { nome, senha } = req.params;
@@ -68,7 +70,7 @@ exports.getCompanyById = (req, res) => {
 // }
 
 
-// Exibir Ponto
+// Exibir Ponto coleta
 exports.getPoint = (req, res) => {
 
     const { nome, senha } = req.params;
@@ -83,6 +85,7 @@ exports.getPoint = (req, res) => {
     });
 }
 
+// Cadastro - Empresa
 exports.post = (req, res) => {
 
     const { nome, cnpj, telefone, email, senha } = req.body
@@ -97,7 +100,7 @@ exports.post = (req, res) => {
     })
 }
 
-
+// Alterar cadastro - Empresa
 exports.put = (req, res) => {
     const { id, nome, senha } = req.body
 
@@ -115,7 +118,7 @@ exports.put = (req, res) => {
     })
 }
 
-// Alterar ponto
+// Alterar ponto coleta
 exports.putPoint = (req, res) => {
     const { id, nome, logradouro } = req.body;
 
@@ -131,7 +134,7 @@ exports.putPoint = (req, res) => {
     })
 }
 
-
+// Deletear Cadastro - Empresa
 exports.delete = (req, res) => {
     const { id } = req.body
 

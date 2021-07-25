@@ -1,5 +1,6 @@
 const banco = require('../postgres');
 
+// Login - Usuario
 exports.get = (req, res) => {
 
     const { nome, senha } = req.params;
@@ -15,6 +16,7 @@ exports.get = (req, res) => {
     });
 }
 
+// Exibir informações - Usuario
 exports.getUser = (req, res) => {
 
     const { nome, senha } = req.params;
@@ -52,6 +54,7 @@ exports.getUserById = (req, res) => {
     })
 }
 
+// Cadastrar - Usuario
 exports.post = (req, res) => {
 
     // const id = req.body;
@@ -68,7 +71,7 @@ exports.post = (req, res) => {
 }
 
 
-
+// Alterar cadastro - Usuario
 exports.put = (req, res) => {
     const { id, nome, senha, cpf, telefone } = req.body
 
@@ -86,7 +89,7 @@ exports.put = (req, res) => {
     })
 }
 
-
+// Deletar cadastro - Usuario
 exports.delete = (req, res) => {
     const { id } = req.body
 
