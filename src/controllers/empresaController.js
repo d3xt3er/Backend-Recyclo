@@ -102,9 +102,9 @@ exports.post = (req, res) => {
 
 // Alterar cadastro - Empresa
 exports.put = (req, res) => {
-    const { id, nome, senha } = req.body
+    const { id, nome, senha, telefone } = req.body
 
-    banco.query(`UPDATE tb_empresa SET nm_empresa = '${nome}', cd_senha_empresa = '${senha}' WHERE cd_empresa = ${id}`, (error, result) => {
+    banco.query(`UPDATE tb_empresa SET nm_empresa = '${nome}', cd_senha_empresa = '${senha}', cd_telefone = '${telefone}' WHERE cd_empresa = ${id}`, (error, result) => {
         if (!id) {
             return res.send('Usuario não encontrado!');
         }
