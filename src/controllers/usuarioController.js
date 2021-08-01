@@ -58,9 +58,9 @@ exports.getUserById = (req, res) => {
 exports.post = (req, res) => {
 
     // const id = req.body;
-    const { nome, email, senha, cpf } = req.body
+    const { nome, email, senha, cpf, telefone } = req.body
 
-    banco.query(`INSERT INTO tb_usuario (cd_usuario, nm_usuario, ds_email, cd_senha, cd_cpf) VALUES ((select novoId()), $1, $2, $3, $4) RETURNING *`, [nome, email, senha, cpf], (error, results) => {
+    banco.query(`INSERT INTO tb_usuario (cd_usuario, nm_usuario, ds_email, cd_senha, cd_cpf, cd_telefone) VALUES ((select novoId()), $1, $2, $3, $4, $5) RETURNING *`, [nome, email, senha, cpf, telefone], (error, results) => {
         if (error) {
             res.json(error);
             console.log(error);
