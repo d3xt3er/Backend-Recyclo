@@ -10,6 +10,7 @@ router.put('/ponto/alterar', controller.putPoint);
 router.get('/:id', controller.getCompanyById);
 router.post('/criar', controller.post);
 router.put('/alterar', controller.put);
+router.delete('/deletar/ponto/', controller.deletePoint);
 router.delete('/deletar', controller.delete);
 
 

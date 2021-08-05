@@ -58,9 +58,9 @@ exports.getCompanyById = (req, res) => {
 // Adicionar Ponto
 exports.point = (req, res) => {
 
-    const { id_ponto, nome_ponto, logradouro, cd_empresa } = req.body
+    const { id_ponto, nome, endereco, id } = req.body
 
-    banco.query('INSERT INTO tb_ponto_coleta (cd_ponto_coleta, nm_ponto, nm_logradouro, cd_telefone) VALUES ($1, $2, $3, $4) RETURNING *', [id_ponto, nome_ponto, logradouro, cd_empresa], (error, result) => {
+    banco.query('INSERT INTO tb_ponto_coleta (cd_ponto_coleta, nm_ponto, nm_logradouro, fk_cd_empresa) VALUES ($1, $2, $3, $4) RETURNING *', [id_ponto, nome, endereco, id], (error, result) => {
         if (error) {
             res.send('Ponto cadastrado!')
         } else {
@@ -134,7 +134,7 @@ exports.putPoint = (req, res) => {
     })
 }
 
-// Deletear Cadastro - Empresa
+// Deletar Cadastro - Empresa
 exports.delete = (req, res) => {
     const { id } = req.body
 
@@ -148,6 +148,24 @@ exports.delete = (req, res) => {
             console.log(error);
         } else {
             res.send('Usuario deletado com sucesso!');
+        }
+    })
+}
+
+// Deletear Ponto Coleta - Empresa
+exports.deletePoint = (req, res) => {
+    const { id, id_empresa } = req.body
+
+    banco.query(`DELETE FROM tb_ponto_coleta WHERE cd_ponto_coleta = '${id}' AND fk_cd_empresa = '${id_empresa}'`, (error, result) => {
+        if (!id) {
+            return res.send('Ponto não deletado!')
+        }
+
+        if (error) {
+            res.json(error)
+            console.log(error);
+        } else {
+            res.send('Ponto deletado com sucesso!');
         }
     })
 }
