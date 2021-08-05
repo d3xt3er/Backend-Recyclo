@@ -80,7 +80,7 @@ exports.getPoint = (req, res) => {
         if (result.rows.length > 0) {
             return res.status(200).send(result.rows)
         } else {
-            res.send('Nenhum ponto cadastrado');
+            return res.status(400).send('Nenhum ponto cadastrado');
         }
     });
 }
