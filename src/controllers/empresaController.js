@@ -58,13 +58,13 @@ exports.getCompanyById = (req, res) => {
 // Adicionar Ponto
 exports.point = (req, res) => {
 
-    const { id_ponto, nome, endereco, id } = req.body
+    const { nome, endereco, id } = req.body
 
-    banco.query('INSERT INTO tb_ponto_coleta (cd_ponto_coleta, nm_ponto, nm_logradouro, fk_cd_empresa) VALUES ($1, $2, $3, $4) RETURNING *', [id_ponto, nome, endereco, id], (error, result) => {
+    banco.query('INSERT INTO tb_ponto_coleta (cd_ponto_coleta, nm_ponto, nm_logradouro, fk_cd_empresa) VALUES ((select novoidponto()),$1, $2, $3) RETURNING *', [nome, endereco, id], (error, result) => {
         if (error) {
-            res.send('Ponto cadastrado!')
+            res.send('Desculpe, seu ponto não foi cadastrado!')
         } else {
-            res.send('Desculpe, seu ponto não foi cadastrado');
+            res.send('Ponto cadastrado!');
         }
     })
 }
