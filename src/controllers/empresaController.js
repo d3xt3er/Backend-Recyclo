@@ -69,6 +69,17 @@ exports.point = (req, res) => {
     })
 }
 
+// Exibir Ponto coleta
+exports.getAllPoint = (req, res) => {
+
+    banco.query(`SELECT * FROM tb_ponto_coleta`, (err, result) => {
+        if (result.rows.length > 0) {
+            return res.status(200).send(result.rows)
+        } else {
+            return res.status(400).send('Nenhum ponto cadastrado');
+        }
+    });
+}
 
 // Exibir Ponto coleta
 exports.getPoint = (req, res) => {
