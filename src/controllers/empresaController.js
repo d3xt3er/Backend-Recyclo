@@ -69,10 +69,10 @@ exports.point = (req, res) => {
     })
 }
 
-// Exibir Ponto coleta
+// Exibir todos os pontos coleta
 exports.getAllPoint = (req, res) => {
 
-    banco.query(`SELECT * FROM tb_ponto_coleta`, (err, result) => {
+    banco.query(`SELECT * FROM tb_ponto_coleta as A INNER JOIN tb_empresa as B on a.fk_cd_empresa = b.cd_empresa`, (err, result) => {
         if (result.rows.length > 0) {
             return res.status(200).send(result.rows)
         } else {
