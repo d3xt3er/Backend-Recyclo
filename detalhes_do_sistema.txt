@@ -1,0 +1,5 @@
+- PONTOS PARA SEREM VISTOS APÓS PRINCIPAIS FUNCIONALIDADE ESTAREM PRONTAS
+
+- não criar usuario repetido no sistema
+- não criar mesmo ponto de coleta da empresa repetido
+- verificar se a senha é forte no cadastro

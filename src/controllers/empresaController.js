@@ -133,7 +133,7 @@ exports.put = (req, res) => {
 exports.putPoint = (req, res) => {
     const { id, nome, logradouro } = req.body;
 
-    banco.query(`UPDATE tb_ponto_coleta SET nm_ponto = '${nome}', nm_logradouro = '${logradouro}' WHERE cd_ponto_coleta = ${id}`, (error, result) => {
+    banco.query(`UPDATE tb_ponto_coleta SET nm_ponto = '${nome}', nm_logradouro = '${logradouro}' WHERE cd_ponto_coleta = '${id}'`, (error, result) => {
         if (!id) {
             res.send('Ponto não encontrado')
         }
