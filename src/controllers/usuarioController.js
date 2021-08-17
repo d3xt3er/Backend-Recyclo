@@ -3,10 +3,10 @@ const banco = require('../postgres');
 // Login - Usuario
 exports.get = (req, res) => {
 
-    const { nome, senha } = req.params;
+    const { email, senha } = req.params;
 
 
-    banco.query(`SELECT * FROM tb_usuario WHERE nm_usuario = $1 AND cd_senha = $2;`, [nome, senha], (err, result) => {
+    banco.query(`SELECT * FROM tb_usuario WHERE ds_email = $1 AND cd_senha = $2;`, [email, senha], (err, result) => {
         if (result.rows.length > 0) {
             res.send('Usuario encontrado!');
 
@@ -19,18 +19,32 @@ exports.get = (req, res) => {
 // Exibir informações - Usuario
 exports.getUser = (req, res) => {
 
-    const { nome, senha } = req.params;
+        const { email, senha } = req.params;
 
 
-    banco.query(`SELECT * FROM tb_usuario WHERE nm_usuario = $1 AND cd_senha = $2;`, [nome, senha], (err, result) => {
-        if (result.rows.length > 0) {
-            return res.status(200).send(result.rows[0])
+        banco.query(`SELECT * FROM tb_usuario WHERE ds_email = $1 AND cd_senha = $2`, [email, senha], (err, result) => {
+            if (result.rows.length > 0) {
+                return res.status(200).send(result.rows[0])
 
-        } else {
-            res.send('Informações não encontradas!');
-        }
-    });
-}
+            } else {
+                res.send('Informações não encontradas!');
+            }
+        });
+    }
+    // exports.getUser = (req, res) => {
+
+//     const { nome, senha } = req.params;
+
+
+//     banco.query(`SELECT * FROM tb_usuario WHERE nm_usuario = $1 AND cd_senha = $2;`, [nome, senha], (err, result) => {
+//         if (result.rows.length > 0) {
+//             return res.status(200).send(result.rows[0])
+
+//         } else {
+//             res.send('Informações não encontradas!');
+//         }
+//     });
+// }
 
 
 exports.getUserById = (req, res) => {
@@ -103,6 +117,20 @@ exports.delete = (req, res) => {
             console.log(error);
         } else {
             res.send('Usuario deletado com sucesso!');
+        }
+    })
+}
+
+
+// Denuncias
+
+exports.getReport = (req, res) => {
+    const { nome, senha } = req.params;
+    banco.query(`SELECT * FROM tb_denuncia as A INNER JOIN tb_usuario as B on a.fk_cd_usuario = b.cd_usuario and b.nm_usuario = $1 and b.cd_senha = $2`, [nome, senha], (error, result) => {
+        if (result.rows.length > 0) {
+            return res.status(200).send(result.rows)
+        } else {
+            return res.status(400).send('Nenhuma denuncia encontrada');
         }
     })
 }
