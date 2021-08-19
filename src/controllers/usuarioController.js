@@ -19,33 +19,17 @@ exports.get = (req, res) => {
 // Exibir informações - Usuario
 exports.getUser = (req, res) => {
 
-        const { email, senha } = req.params;
+    const { email, senha } = req.params;
 
+    banco.query(`SELECT * FROM tb_usuario WHERE ds_email = $1 AND cd_senha = $2`, [email, senha], (err, result) => {
+        if (result.rows.length > 0) {
+            return res.status(200).send(result.rows[0])
 
-        banco.query(`SELECT * FROM tb_usuario WHERE ds_email = $1 AND cd_senha = $2`, [email, senha], (err, result) => {
-            if (result.rows.length > 0) {
-                return res.status(200).send(result.rows[0])
-
-            } else {
-                res.send('Informações não encontradas!');
-            }
-        });
-    }
-    // exports.getUser = (req, res) => {
-
-//     const { nome, senha } = req.params;
-
-
-//     banco.query(`SELECT * FROM tb_usuario WHERE nm_usuario = $1 AND cd_senha = $2;`, [nome, senha], (err, result) => {
-//         if (result.rows.length > 0) {
-//             return res.status(200).send(result.rows[0])
-
-//         } else {
-//             res.send('Informações não encontradas!');
-//         }
-//     });
-// }
-
+        } else {
+            res.send('Informações não encontradas!');
+        }
+    });
+}
 
 exports.getUserById = (req, res) => {
     const id = parseInt(req.params.id)
@@ -69,19 +53,26 @@ exports.getUserById = (req, res) => {
 }
 
 // Cadastrar - Usuario
-exports.post = (req, res) => {
+exports.postUser = (req, res) => {
 
-    // const id = req.body;
-    const { nome, email, senha, cpf, telefone } = req.body
+    banco.query(`SELECT * FROM tb_usuario WHERE ds_email = $1 OR cd_cpf = $2`, [req.body.email, req.body.cpf], (error, result) => {
 
-    banco.query(`INSERT INTO tb_usuario (cd_usuario, nm_usuario, ds_email, cd_senha, cd_cpf, cd_telefone) VALUES ((select novoId()), $1, $2, $3, $4, $5) RETURNING *`, [nome, email, senha, cpf, telefone], (error, results) => {
-        if (error) {
-            res.json(error);
-            console.log(error);
+        if (result.rows.length > 0) {
+            return res.status(409).send('Usuário já cadastrado')
         } else {
-            res.send('Cadastrado com sucesso!');
+            const { nome, email, senha, cpf, telefone } = req.body
+
+            banco.query(`INSERT INTO tb_usuario (cd_usuario, nm_usuario, ds_email, cd_senha, cd_cpf, cd_telefone) VALUES ((select novoId()), $1, $2, $3, $4, $5) RETURNING *`, [nome, email, senha, cpf, telefone], (error, results) => {
+                if (error) {
+                    res.json(error);
+                    console.log(error);
+                } else {
+                    res.send('Cadastrado com sucesso!');
+                }
+            })
         }
     })
+
 }
 
 

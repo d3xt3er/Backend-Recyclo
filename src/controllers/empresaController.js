@@ -99,16 +99,27 @@ exports.getPoint = (req, res) => {
 // Cadastro - Empresa
 exports.post = (req, res) => {
 
-    const { nome, cnpj, telefone, email, senha } = req.body
 
-    banco.query('INSERT INTO tb_empresa (cd_empresa, nm_empresa, cd_cnpj, cd_telefone, nm_email, cd_senha_empresa) VALUES ((select novoidempresa()), $1, $2, $3, $4, $5) RETURNING *', [nome, cnpj, telefone, email, senha], (error, results) => {
-        if (error) {
-            res.send('Desculpe, houve um erro!');
-            console.log(error);
+    banco.query(`SELECT * FROM tb_empresa WHERE nm_email = $1 OR cd_cnpj = $2`, [req.body.email, req.body.cnpj], (error, result) => {
+
+        if (result.rows.length > 0) {
+            return res.status(409).send('Empresa já cadastrada')
         } else {
-            res.send('Cadastrado com sucesso!');
+            const { nome, cnpj, telefone, email, senha } = req.body
+
+            banco.query('INSERT INTO tb_empresa (cd_empresa, nm_empresa, cd_cnpj, cd_telefone, nm_email, cd_senha_empresa) VALUES ((select novoidempresa()), $1, $2, $3, $4, $5) RETURNING *', [nome, cnpj, telefone, email, senha], (error, results) => {
+                if (error) {
+                    res.send('Desculpe, houve um erro!');
+                    console.log(error);
+                } else {
+                    res.send('Cadastrado com sucesso!');
+                }
+            })
         }
     })
+
+
+
 }
 
 // Alterar cadastro - Empresa
