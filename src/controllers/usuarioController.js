@@ -116,12 +116,27 @@ exports.delete = (req, res) => {
 // Denuncias
 
 exports.getReport = (req, res) => {
-    const { nome, senha } = req.params;
-    banco.query(`SELECT * FROM tb_denuncia as A INNER JOIN tb_usuario as B on a.fk_cd_usuario = b.cd_usuario and b.nm_usuario = $1 and b.cd_senha = $2`, [nome, senha], (error, result) => {
+    const { cd_usuario } = req.body;
+    banco.query(`SELECT * FROM tb_denuncia as A INNER JOIN tb_usuario as B on a.fk_cd_usuario = b.cd_usuario`, [cd_usuario], (error, result) => {
         if (result.rows.length > 0) {
             return res.status(200).send(result.rows)
         } else {
             return res.status(400).send('Nenhuma denuncia encontrada');
         }
     })
+}
+
+exports.postReport = (req, res) => {
+
+    const { id, nm_logradouro, ds_comentario, cd_localizacao } = req.body
+
+    banco.query(`select novodiscarteilegal('${nm_logradouro}','${ds_comentario}',${id},'${cd_localizacao}');`, (error, result) => {
+        if (error) {
+            res.json(error);
+            console.log(error);
+        } else {
+            res.send('Denuncia efetuada');
+        }
+    })
+
 }
