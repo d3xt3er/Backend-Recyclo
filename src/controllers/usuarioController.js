@@ -116,13 +116,20 @@ exports.delete = (req, res) => {
 // Denuncias
 
 exports.getReport = (req, res) => {
-    const { cd_usuario } = req.body;
-    banco.query(`SELECT * FROM tb_denuncia as A INNER JOIN tb_usuario as B on a.fk_cd_usuario = b.cd_usuario`, [cd_usuario], (error, result) => {
-        if (result.rows.length > 0) {
-            return res.status(200).send(result.rows)
+    const id = parseInt(req.params.id)
+    banco.query(`SELECT * FROM tb_denuncia where fk_cd_usuario = $1`, [id], (error, result, fields) => {
+        if (result.rows.length == []) {
+            res.send('Nenhuma denuncia!')
+
         } else {
-            return res.status(400).send('Nenhuma denuncia encontrada');
+
+            //  Mostra o objeto JSON
+            res.status(200).send(result.rows)
+
+            //  Mostra o texto
+            // res.send(result.rows[0].nm_logradouro + result.rows[0].ds_comentario + result.rows[0].dt_denuncia)
         }
+
     })
 }
 
