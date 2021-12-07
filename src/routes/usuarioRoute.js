@@ -12,8 +12,8 @@ router.delete('/deletar', controller.delete);
 // Denuncias
 router.get('/denuncias/:id', controller.getReport);
 router.post('/criar/denuncia', controller.postReport);
-// router.put('/alterar/denuncia', controller.putReport);
-// router.delete('/deletar/denuncia', controller.deleteReport);
+router.put('/alterar/denuncia', controller.putReport);
+router.delete('/deletar/denuncia', controller.deleteReport);
 
 
 

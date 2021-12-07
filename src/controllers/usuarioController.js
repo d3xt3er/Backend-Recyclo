@@ -147,3 +147,35 @@ exports.postReport = (req, res) => {
     })
 
 }
+
+exports.putReport = (req, res) => {
+    const { id_denuncia, nome, logradouro } = req.body;
+
+    banco.query(`UPDATE tb_denuncia SET nm_logradouro = '${nome}', ds_comentario = '${logradouro}' WHERE cd_denuncia = '${id_denuncia}'`, (error, result) => {
+        if (!id_denuncia) {
+            res.send('Denúncia não alterada')
+        }
+        if (error) {
+            res.json(error)
+        } else {
+            res.send('Denúncia alterada com sucesso!')
+        }
+    })
+}
+
+exports.deleteReport = (req, res) => {
+    const { id_denuncia, id_usuario } = req.body
+
+    banco.query(`DELETE FROM tb_denuncia WHERE cd_denuncia = '${id_denuncia}' AND fk_cd_usuario = '${id_usuario}'`, (error, result) => {
+        if (!id_denuncia) {
+            return res.send('Denúncia não deletada!')
+        }
+
+        if (error) {
+            res.json(error)
+            console.log(error);
+        } else {
+            res.send('Denúncia deletada com sucesso!');
+        }
+    })
+}
