@@ -116,18 +116,15 @@ exports.delete = (req, res) => {
 // Denuncias
 
 exports.getReport = (req, res) => {
-    const id = parseInt(req.params.id)
-    banco.query(`SELECT * FROM tb_denuncia where fk_cd_usuario = $1`, [id], (error, result, fields) => {
-        if (result.rows.length == []) {
-            res.send('Nenhuma denuncia!')
+    const { email, senha } = req.params;
 
+    banco.query(`SELECT * FROM tb_denuncia as A INNER JOIN tb_usuario as B on a.fk_cd_usuario = b.cd_usuario and b.ds_email = $1 and b.cd_senha = $2;`, [email, senha], (error, result, fields) => {
+
+        console.log(result);
+        if (result.rows.length > 0) {
+            return res.status(200).send(result.rows)
         } else {
-
-            //  Mostra o objeto JSON
-            res.status(200).send(result.rows)
-
-            //  Mostra o texto
-            // res.send(result.rows[0].nm_logradouro + result.rows[0].ds_comentario + result.rows[0].dt_denuncia)
+            return res.status(400).send('Nenhuma denuncia cadastrado');
         }
 
     })
