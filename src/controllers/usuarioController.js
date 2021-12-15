@@ -60,9 +60,10 @@ exports.postUser = (req, res) => {
         if (result.rows.length > 0) {
             return res.status(409).send('Usuário já cadastrado')
         } else {
+            var id = 10
             const { nome, email, senha, cpf, telefone } = req.body
 
-            banco.query(`INSERT INTO tb_usuario (cd_usuario, nm_usuario, ds_email, cd_senha, cd_cpf, cd_telefone) VALUES ((select novoId()), $1, $2, $3, $4, $5) RETURNING *`, [nome, email, senha, cpf, telefone], (error, results) => {
+            banco.query(`INSERT INTO tb_usuario (cd_usuario, nm_usuario, ds_email, cd_senha, cd_cpf, cd_telefone) VALUES ((select id('usuario')), $1, $2, $3, $4, $5) RETURNING *`, [nome, email, senha, cpf, telefone], (error, results) => {
                 if (error) {
                     res.json(error);
                     console.log(error);
