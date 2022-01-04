@@ -191,3 +191,32 @@ exports.deletePoint = (req, res) => {
         }
     })
 }
+
+
+exports.verifyCompany = (req, res) => {
+
+    const { email } = req.params;
+
+    banco.query(`SELECT * FROM tb_empresa WHERE nm_email = $1`, [email], (err, result) => {
+        if (result.rows.length > 0) {
+            res.send('Usuario encontrado!');
+
+        } else {
+            res.send('Usuario não existente');
+        }
+    });
+}
+
+
+exports.putPassword = (req, res) => {
+    const { email, senha } = req.body
+
+    banco.query(`UPDATE tb_empresa SET cd_senha = '${senha}' WHERE nm_email = '${email}'`, (error, result) => {
+        if (!email) {
+            res.send('Não alterado!')
+        }
+         else {
+            res.send('Alterado com sucesso!')
+        }
+    })
+}

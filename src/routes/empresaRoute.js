@@ -13,7 +13,8 @@ router.post('/criar', controller.post);
 router.put('/alterar', controller.put);
 router.delete('/deletar/ponto/', controller.deletePoint);
 router.delete('/deletar', controller.delete);
-
+router.get('/editar/:email', controller.verifyCompany);
+router.put('/password', controller.putPassword);
 
 
 module.exports = router;
