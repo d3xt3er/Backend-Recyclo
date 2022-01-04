@@ -1,4 +1,5 @@
 const banco = require('../postgres');
+const nodemailer = require("nodemailer");
 
 // Login - Usuario
 exports.get = (req, res) => {
@@ -60,7 +61,6 @@ exports.postUser = (req, res) => {
         if (result.rows.length > 0) {
             return res.status(409).send('Usuário já cadastrado')
         } else {
-            var id = 10
             const { nome, email, senha, cpf, telefone } = req.body
 
             banco.query(`INSERT INTO tb_usuario (cd_usuario, nm_usuario, ds_email, cd_senha, cd_cpf, cd_telefone) VALUES ((select id('usuario')), $1, $2, $3, $4, $5) RETURNING *`, [nome, email, senha, cpf, telefone], (error, results) => {
@@ -197,6 +197,7 @@ exports.verifyUser = (req, res) => {
 exports.putPassword = (req, res) => {
     const { email, senha } = req.body
 
+    
     banco.query(`UPDATE tb_usuario SET cd_senha = '${senha}' WHERE ds_email = '${email}'`, (error, result) => {
         if (!email) {
             res.send('Não alterado!')
@@ -207,4 +208,28 @@ exports.putPassword = (req, res) => {
             res.send('Alterado com sucesso!')
         }
     })
+
+    // Envio de email ao usuário ao resetar senha
+    //  const transporter = nodemailer.createTransport({
+    //     service: 'gmail',
+    //     auth: {
+    //       user: 'paulo27alt@gmail.com',
+    //       pass: 'yourpassword'
+    //     }
+    //   });
+      
+    //   const mailOptions = {
+    //     from: 'paulo27alt@gmail.com',
+    //     to: email,
+    //     subject: 'Alteração de senha',
+    //     text: 'Houve recentemente um alteração na sua senha de acesso a conta em nosso sistema Recyclo!'
+    //   };
+      
+    //   transporter.sendMail(mailOptions, function(error, info){
+    //     if (error) {
+    //       console.log(error);
+    //     } else {
+    //       console.log('Email enviado: ' + info.response);
+    //     }
+    //   });
 }
