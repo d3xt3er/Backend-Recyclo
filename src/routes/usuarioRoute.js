@@ -7,6 +7,8 @@ router.get('/user/:email/:senha', controller.getUser);
 router.get('/:id', controller.getUserById);
 router.post('/criar', controller.postUser);
 router.put('/alterar', controller.put);
+router.get('/editar/:email', controller.verifyUser);
+router.put('/password/', controller.putPassword);
 router.delete('/deletar', controller.delete);
 
 // Denuncias

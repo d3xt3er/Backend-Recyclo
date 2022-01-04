@@ -177,3 +177,37 @@ exports.deleteReport = (req, res) => {
         }
     })
 }
+
+
+exports.verifyUser = (req, res) => {
+
+    const { email} = req.params;
+
+
+    banco.query(`SELECT * FROM tb_usuario WHERE ds_email = $1 `, [email], (err, result) => {
+        if (result.rows.length > 0) {
+            res.send('Usuario encontrado!');
+
+        } else {
+            res.send('Usuario não existente');
+        }
+    });
+}
+
+
+exports.putPassword = (req, res) => {
+    const { email, senha } = req.body
+
+    banco.query(`UPDATE tb_usuario SET cd_senha = '${senha}' WHERE ds_email = ${email}`, (err, result) => {
+        if (!email) {
+            return res.send('Senha não alterada');
+        }
+        if (err) {
+            res.json(err);
+            console.log(err);
+        } else {
+            console.log(result);
+            res.send('Alterado!')
+        }
+   });
+}
