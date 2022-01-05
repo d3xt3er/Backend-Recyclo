@@ -231,7 +231,7 @@ exports.putPassword = (req, res) => {
     });
     
     const mailOptions = {
-        from: 'recyclo.cp@gmail.com',
+        from: 'Recyclo <recyclo.cp@gmail.com>',
         to: email,
         subject: 'Alteração de senha',
         text: 'Houve recentemente um alteração na sua senha de acesso a conta em nosso sistema Recyclo!'
