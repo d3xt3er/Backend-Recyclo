@@ -207,29 +207,30 @@ exports.putPassword = (req, res) => {
         } else {
             res.send('Alterado com sucesso!')
         }
-    })
 
-    // Envio de email ao usuário ao resetar senha
-    //  const transporter = nodemailer.createTransport({
-    //     service: 'gmail',
-    //     auth: {
-    //       user: 'paulo27alt@gmail.com',
-    //       pass: 'yourpassword'
-    //     }
-    //   });
-      
-    //   const mailOptions = {
-    //     from: 'paulo27alt@gmail.com',
-    //     to: email,
-    //     subject: 'Alteração de senha',
-    //     text: 'Houve recentemente um alteração na sua senha de acesso a conta em nosso sistema Recyclo!'
-    //   };
-      
-    //   transporter.sendMail(mailOptions, function(error, info){
-    //     if (error) {
-    //       console.log(error);
-    //     } else {
-    //       console.log('Email enviado: ' + info.response);
-    //     }
-    //   });
+        // Envio de email ao usuário ao resetar senha
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+            user: 'recyclo.cp@gmail.com',
+            pass: '#Y^pVvyE3'
+            }
+        });
+        
+        const mailOptions = {
+            from: 'recyclo.cp@gmail.com',
+            to: email,
+            subject: 'Alteração de senha',
+            text: 'Houve recentemente um alteração na sua senha de acesso a conta em nosso sistema Recyclo!'
+        };
+        
+        transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+            console.log(error);
+            } else {
+            console.log('Email enviado: ' + info.response);
+            }
+        });
+
+    })
 }
