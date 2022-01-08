@@ -210,38 +210,44 @@ exports.verifyCompany = (req, res) => {
 
 
 exports.putPassword = (req, res) => {
+    var someDate = new Date();
+    var dd = someDate.getDate();
+    var mm = someDate.getMonth() + 1;
+    var y = someDate.getFullYear();
+    var someFormattedDate = dd + '/' + mm + '/' + y;
+    var time = someDate.getHours() + ":" + someDate.getMinutes() + ":" + someDate.getSeconds();
+
     const { email, senha } = req.body
 
     banco.query(`UPDATE tb_empresa SET cd_senha = '${senha}' WHERE nm_email = '${email}'`, (error, result) => {
         if (!email) {
             res.send('Não alterado!')
-        }
-         else {
+        } else {
             res.send('Alterado com sucesso!')
         }
     })
 
-     // Envio de email ao usuário ao resetar senha
-     const transporter = nodemailer.createTransport({
+    // Envio de email ao usuário ao resetar senha
+    const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
             user: 'recyclo.cp@gmail.com',
             pass: '#Y^pVvyE3'
         }
     });
-    
+
     const mailOptions = {
         from: 'Recyclo <recyclo.cp@gmail.com>',
         to: email,
         subject: 'Alteração de senha',
-        text: 'Houve recentemente um alteração na sua senha de acesso a conta em nosso sistema Recyclo!'
+        text: `Houve recentemente um alteração na sua senha de acesso a conta em nosso sistema Recyclo!, A operação foi realizada em ${someFormattedDate} às ${time}`
     };
-    
-    transporter.sendMail(mailOptions, function(error, info){
+
+    transporter.sendMail(mailOptions, function(error, info) {
         if (error) {
-        console.log(error);
+            console.log(error);
         } else {
-        console.log('Email enviado: ' + info.response);
+            console.log('Email enviado: ' + info.response);
         }
     });
 }
