@@ -99,16 +99,20 @@ exports.put = (req, res) => {
 exports.delete = (req, res) => {
     const { id } = req.body
 
-    banco.query(`DELETE FROM tb_usuario WHERE cd_usuario = '${id}'`, (error, result) => {
-        if (!id) {
-            return res.send('Usuario não encontrado')
-        }
-
+    banco.query(`DELETE FROM tb_denuncia WHERE fk_cd_usuario = '${id}'`, (error, result) => {
         if (error) {
             res.json(error)
             console.log(error);
         } else {
-            res.send('Usuario deletado com sucesso!');
+            banco.query(`DELETE FROM tb_usuario WHERE cd_usuario = '${id}'`, (error,result) => {
+                if (error) {
+                    res.send('Desculpe, houve um erro!');
+                    console.log(error);
+                } else {
+                    res.send('Usuario deletado com sucesso!');
+                }
+                
+            })   
         }
     })
 }
