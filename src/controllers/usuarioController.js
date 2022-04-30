@@ -59,16 +59,15 @@ exports.postUser = (req, res) => {
     banco.query(`SELECT * FROM tb_usuario WHERE ds_email = $1 OR cd_cpf = $2`, [req.body.email, req.body.cpf], (error, result) => {
 
         if (result.rows.length > 0) {
-            return res.status(409).send('Usuário já cadastrado')
+            res.sendStatus(400);
         } else {
             const { nome, email, senha, cpf, telefone } = req.body
 
             banco.query(`INSERT INTO tb_usuario (cd_usuario, nm_usuario, ds_email, cd_senha, cd_cpf, cd_telefone) VALUES ((select id('usuario')), $1, $2, $3, $4, $5) RETURNING *`, [nome, email, senha, cpf, telefone], (error, results) => {
                 if (error) {
-                    res.json(error);
-                    console.log(error);
+                    res.sendStatus(400);
                 } else {
-                    res.send('Cadastrado com sucesso!');
+                    res.sendStatus(200);
                 }
             })
         }

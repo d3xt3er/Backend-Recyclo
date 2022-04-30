@@ -104,16 +104,16 @@ exports.post = (req, res) => {
     banco.query(`SELECT * FROM tb_empresa WHERE nm_email = $1 OR cd_cnpj = $2`, [req.body.email, req.body.cnpj], (error, result) => {
 
         if (result.rows.length > 0) {
-            return res.status(409).send('Empresa já cadastrada')
+            res.sendStatus(400);
         } else {
             const { nome, cnpj, telefone, email, senha } = req.body
 
-            banco.query('INSERT INTO tb_empresa (cd_empresa, nm_empresa, cd_cnpj, cd_telefone, nm_email, cd_senha_empresa) VALUES ((select novoidempresa()), $1, $2, $3, $4, $5) RETURNING *', [nome, cnpj, telefone, email, senha], (error, results) => {
+            banco.query(`INSERT INTO tb_empresa (cd_empresa, nm_empresa, cd_cnpj, cd_telefone, nm_email, cd_senha_empresa) VALUES ((select id('empresa')), $1, $2, $3, $4, $5) RETURNING *`, [nome, cnpj, telefone, email, senha], (error, results) => {
                 if (error) {
-                    res.send('Desculpe, houve um erro!');
+                    res.sendStatus(400);
                     console.log(error);
                 } else {
-                    res.send('Cadastrado com sucesso!');
+                    res.sendStatus(200);
                 }
             })
         }
@@ -210,6 +210,7 @@ exports.verifyCompany = (req, res) => {
 
 
 exports.putPassword = (req, res) => {
+
     var someDate = new Date();
     var dd = someDate.getDate();
     var mm = someDate.getMonth() + 1;
